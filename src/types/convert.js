@@ -1,5 +1,5 @@
 import * as validate from '../types/validate'
-
+import bigInt from 'big-integer'
 /**
  * Convert hexadecimal string into uint8Array
  * @param {string} str

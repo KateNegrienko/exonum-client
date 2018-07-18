@@ -388,6 +388,7 @@ describe('Send transaction to the blockchain', function () {
   let sendFunds = Exonum.newMessage({
     protocol_version: 0,
     service_id: 130,
+    public_key: 'fa7f9ee43aff70c879f80fa7fd15955c18b98c72310b09e7818310325050cf7a',
     message_id: 128,
     fields: [
       { name: 'from', type: Exonum.Hash },
@@ -545,6 +546,7 @@ describe('Send multiple transactions to the blockchain', function () {
   let sendFunds = Exonum.newMessage({
     protocol_version: 0,
     service_id: 130,
+    public_key: 'fa7f9ee43aff70c879f80fa7fd15955c18b98c72310b09e7818310325050cf7a',
     message_id: 128,
     fields: [
       { name: 'from', type: Exonum.Hash },

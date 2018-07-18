@@ -1,5 +1,5 @@
 import * as primitive from './primitive'
-import { Digest } from './hexadecimal'
+import { Digest, Hash } from './hexadecimal'
 import { fieldIsFixed, newType } from './generic'
 import * as serialization from './serialization'
 import * as crypto from '../crypto'
@@ -27,6 +27,7 @@ class NewMessage {
     this.service_id = type.service_id
     this.signature = type.signature
     this.fields = type.fields
+    this.publicKey = type.public_key
   }
 
   size () {
@@ -47,6 +48,30 @@ class NewMessage {
   serialize (data, cutSignature) {
     const MessageHead = newType({
       fields: [
+        { name: 'protocol_version', type: primitive.Uint16 },
+        { name: 'pk_size', type: primitive.Uint64 },
+        { name: 'pk_data', type: Hash },
+        { name: 'tx_tag', type: primitive.Uint32 },
+        { name: 'service_id', type: primitive.Uint16 },
+        { name: 'full_tx_len', type: primitive.Uint64 }
+      ]
+    })
+console.log('header', this.publicKey)
+    const header = {
+      protocol_version: this.protocol_version,
+      pk_size: this.publicKey.length / 2,
+      pk_data: this.publicKey,
+      tx_tag: 0,
+      service_id: this.service_id,
+      full_tx_len: 0
+    }
+
+    let buffer = MessageHead.serialize(header)
+
+    // console.log(uint8ArrayToHexadecimal(buffer))
+    /*
+     const MessageHead = newType({
+      fields: [
         { name: 'network_id', type: primitive.Uint8 },
         { name: 'protocol_version', type: primitive.Uint8 },
         { name: 'message_id', type: primitive.Uint16 },
@@ -54,7 +79,6 @@ class NewMessage {
         { name: 'payload', type: primitive.Uint32 }
       ]
     })
-
     let buffer = MessageHead.serialize({
       network_id: 0,
       protocol_version: this.protocol_version,
@@ -62,18 +86,27 @@ class NewMessage {
       service_id: this.service_id,
       payload: 0 // placeholder, real value will be inserted later
     })
+    */
 
     // serialize and append message body
-    buffer = serialization.serialize(buffer, 10, data, this, true)
+    let body = []
+    body = serialization.serialize(body, 0, data, this, true)
 
     // calculate payload and insert it into buffer
-    primitive.Uint32.serialize(buffer.length + SIGNATURE_LENGTH, buffer, 6)
+    primitive.Uint64.serialize(body.length, buffer, 48)
+
+    body.forEach(element => {
+      buffer.push(element)
+    })
+
+    // calculate SIGNATURE_LENGTH and insert it into buffer
+    primitive.Uint64.serialize(SIGNATURE_LENGTH, buffer, buffer.length)
 
     if (cutSignature !== true) {
       // append signature
       Digest.serialize(this.signature, buffer, buffer.length)
     }
-
+    console.log(buffer.toString())
     return buffer
   }
 
@@ -137,3 +170,27 @@ export function newMessage (type) {
 export function isInstanceofOfNewMessage (type) {
   return type instanceof NewMessage
 }
+
+/*
+const MessageHead = newType({
+      fields: [
+        { name: 'protocol_version', type: primitive.Uint64 },
+        { name: 'pk_size', type: primitive.Uint16 },
+        { name: 'pk_data', type: primitive.Hash },
+        { name: 'tx_tag', type: primitive.Uint16 },
+        { name: 'service_id', type: primitive.Uint16 },
+        { name: 'full_tx_len', type: primitive.Uint16 },
+        { name: 'payload', type: primitive.Uint32 }
+      ]
+    })
+
+    let buffer = MessageHead.serialize({
+      protocol_version: this.protocol_version,
+      pk_size: 0,
+      pk_data: null, // publicKey,
+      tx_tag: this.tx_tag,
+      service_id: this.service_id,
+      full_tx_len: 0,
+      payload: 0 // placeholder, real value will be inserted later
+    })
+ */

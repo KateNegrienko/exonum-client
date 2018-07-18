@@ -121,7 +121,7 @@ export function serialize (buffer, shift, data, type, isTransactionBody) {
     if (value === undefined) {
       throw new TypeError('Field ' + field.name + ' is not defined.')
     }
-
+    
     const from = shift + localShift
     let nestedShift = (isTransactionBody === true) ? 0 : shift
 

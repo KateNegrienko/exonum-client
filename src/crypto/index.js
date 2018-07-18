@@ -90,6 +90,8 @@ export function verifySignature (signature, publicKey, data, type) {
   let publicKeyUint8Array
   let buffer
 
+  type.public_key = publicKey
+
   if (!validate.validateHexadecimal(signature, 64)) {
     throw new TypeError('Signature of wrong type is passed. Hexadecimal expected.')
   }

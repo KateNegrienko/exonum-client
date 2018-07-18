@@ -118,6 +118,7 @@ export function verifyBlock (data, validators) {
     }
 
     const publicKey = validators[precommit.body.validator]
+    console.log(publicKey)
 
     if (!verifySignature(precommit.signature, publicKey, precommit.body, Precommit)) {
       return false
