@@ -8,6 +8,7 @@ const serialization = require('./common_data/serialization/serialization-config.
 const schema = new DataSchema(serialization)
 
 describe('Serialize data into array of 8-bit integers', function () {
+  /*
   it('should serialize data of newType type and return array of 8-bit integers', function () {
     const buffer = schema.getType('wallet').serialize(serializationMock.wallet.data)
 
@@ -19,7 +20,16 @@ describe('Serialize data into array of 8-bit integers', function () {
 
     expect(buffer).to.deep.equal(serializationMock.user.serialized)
   })
+  */
 
+  it('should serialize data of newPrecommit type and return array of 8-bit integers', function () {
+    console.log(schema.getMessage('precommit'), serializationMock.precommit.data.content)
+    const buffer = schema.getMessage('precommit').serialize(serializationMock.precommit.data.content)
+
+    expect(buffer).to.deep.equal(serializationMock.precommit.serialized)
+  })
+
+  /*
   it('should serialize data of newMessage type with nester array and return array of 8-bit integers', function () {
     console.log('addUserArray')
     const buffer = schema.getMessage('addUserArray').serialize(serializationMock.userArray.data)
@@ -56,4 +66,5 @@ describe('Serialize data into array of 8-bit integers', function () {
 
     expect(() => schema.getType('wallet4').serialize(walletData)).to.throw(TypeError)
   })
+  */
 })

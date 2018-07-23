@@ -138,5 +138,24 @@
       57, 0, 0, 0, 0, 0, 0, 0, 244, 1, 0, 0, 0, 0, 0, 0, 153, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0, 0,
       0, 0, 0, 0, 0
     ]
+  }, 
+  "precommit": {
+    "data": {
+      "public_key": "bfa0558f3768a9d06019aa13f8ebe227a160a3c31fc2f9201d2c72dc7f77da98",
+      "message_type": "precommit",
+      "content": [{
+        "block_hash": "1a1b6bf4c9f7543809e1011b1d5e4ad0b76eab14924d8ff00ba1a79f0466ce6b",
+        "height": "4",
+        "propose_hash": "878165361bb6b207ca75cac83e2817b34564a9b5115128b21f4f89f729d60769",
+        "round": 4,
+        "date_timems": "1486720350",
+        "date_timens": 804000000,
+        "validator": 0
+      }]
+    },
+    "serialized": [
+      57, 0, 0, 0, 0, 0, 0, 0, 244, 1, 0, 0, 0, 0, 0, 0, 153, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0, 0,
+      0, 0, 0, 0, 0
+    ]
   }
 }

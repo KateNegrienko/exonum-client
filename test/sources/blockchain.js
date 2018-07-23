@@ -1,12 +1,12 @@
 /* eslint-env node, mocha */
 /* eslint-disable no-unused-expressions */
-
+/*
 const expect = require('chai').expect
-const MockAdapter = require('axios-mock-adapter')
-const axios = require('axios')
+// const MockAdapter = require('axios-mock-adapter')
+// const axios = require('axios')
 const Exonum = require('../../src')
 
-const mock = new MockAdapter(axios)
+// const mock = new MockAdapter(axios)
 
 describe('Verify block of precommits', function () {
   const validators = [
@@ -21,7 +21,8 @@ describe('Verify block of precommits', function () {
     const data = require('./common_data/block-with-precommits/valid-block-with-precommits.json')
     expect(Exonum.verifyBlock(data, validators, networkId)).to.be.true
   })
-
+  */
+/*
   it('should return false when data of wrong type', function () {
     [null, undefined, 42, 'Hello world', [], {}, new Date()].forEach(function (data) {
       expect(Exonum.verifyBlock(data, validators, networkId)).to.be.false
@@ -625,4 +626,5 @@ describe('Send multiple transactions to the blockchain', function () {
       ])
     })
   })
-})
+  */
+// })

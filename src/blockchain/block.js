@@ -9,6 +9,7 @@ import { hash, verifySignature } from '../crypto'
 const PROTOCOL_VERSION = 0
 const CORE_SERVICE_ID = 0
 const PRECOMMIT_MESSAGE_ID = 4
+const PRECOMMIT_TYPE = 'precommit'
 const Block = newType({
   fields: [
     { name: 'schema_version', type: primitive.Uint16 },
@@ -34,6 +35,7 @@ const SystemTime = newType({
  * @return {boolean}
  */
 export function verifyBlock (data, validators) {
+
   if (!isObject(data)) {
     return false
   }
@@ -63,6 +65,8 @@ export function verifyBlock (data, validators) {
     protocol_version: PROTOCOL_VERSION,
     message_id: PRECOMMIT_MESSAGE_ID,
     service_id: CORE_SERVICE_ID,
+    message_type: PRECOMMIT_TYPE,
+    public_key: '', 
     fields: [
       { name: 'validator', type: primitive.Uint16 },
       { name: 'height', type: primitive.Uint64 },

@@ -18,6 +18,7 @@ class NewMessage {
         throw new TypeError('Name prop is missed.')
       }
       if (field.type === undefined) {
+        console.log(field)
         throw new TypeError('Type prop is missed.')
       }
     })
@@ -30,6 +31,7 @@ class NewMessage {
     this.public_key = type.public_key
     this.consensus_tag = type.consensus_tag
     this.message_type = type.message_type
+    console.log("type", type, type.message_type, this.message_type )
   }
 
   transactionHeaderSerialization () {
@@ -71,7 +73,7 @@ class NewMessage {
       pk_size: this.public_key.length / 2,
       pk_data: this.public_key,
       consensus_tag: this.consensus_tag,
-      precommit_tag: this.service_id,
+      precommit_tag: this.precommit_tag,
       precommit_len: 0
     }
 
@@ -94,6 +96,7 @@ class NewMessage {
    * @returns {Array}
    */
   serialize (data, cutSignature) {
+    console.log(this.messageType)
     let buffer = this.messageType === 'precommit' ? this.precommitHeaderSerialization() : this.transactionHeaderSerialization()
 
     // serialize and append message body
